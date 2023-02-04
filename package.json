@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "test": "dotenv -e .env.test jest"
+    "test": "dotenv -e .env.test jest",
+    "migration:run": "prisma migrate deploy",
+    "test:load-envs": "dotenv -e .env.test",
+    "test:migration:run": "npm run test:load-envs prisma migrate deploy",
+    "test:seed": "npm run test:load-envs prisma db seed",
+    "test:migration:generate": "npm run test:load-envs prisma migrate dev"
   },
   "repository": {
     "type": "git",
@@ -60,5 +65,8 @@
     "jsonwebtoken": "^8.5.1",
     "nanoid": "^4.0.0",
     "pg": "^8.8.0"
+  },
+  "prisma": {
+    "seed": "npm run dev:load-envs -- ts-node prisma/seed.ts"
   }
 }

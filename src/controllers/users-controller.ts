@@ -4,13 +4,14 @@ import userService from "../service/user-service";
 import { CreateUserParams } from "../service/user-service";
 
 export async function usersPost(req: Request, res: Response) {
- const user = req.body as CreateUserParams;
+ const { name, email, password } = req.body as CreateUserParams;
+ const user = { name, email, password };
 
  try {
   await userService.postUser(user);
 
   res.sendStatus(httpStatus.CREATED);
  } catch (e) {
-  res.sendStatus(httpStatus.NOT_FOUND);
+    if(e.name == "DuplicatedEmailError") return res.sendStatus(httpStatus.CONFLICT)
  }
 }
