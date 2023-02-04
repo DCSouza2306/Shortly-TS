@@ -5,6 +5,6 @@ import { signInSchema } from "../schemas/authentication-schema";
 
 const authRouter = Router();
 
-authRouter.post("/sign-in",validateBody(signInSchema),signInPost)
+authRouter.post("/sign-in", validateBody(signInSchema), signInPost);
 
-export { authRouter };
+export default authRouter;

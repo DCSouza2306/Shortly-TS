@@ -7,4 +7,4 @@ const usersRoute = Router();
 
 usersRoute.post("/",validateBody(createUserSchema),usersPost)
 
-export { usersRoute };
+export default usersRoute;
