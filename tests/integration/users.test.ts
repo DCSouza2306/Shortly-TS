@@ -2,7 +2,6 @@ import { cleanDb } from "../helpers";
 import supertest from "supertest";
 import app from "../../src/app";
 import faker from "@faker-js/faker";
-import exp from "constants";
 import { createUser } from "../factories/user-factory";
 
 beforeAll(async () => {
