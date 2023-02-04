@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import httpStatus from "http-status";
 import { ObjectSchema } from "joi";
-import { invalidDataError } from "@/errors";
+import { invalidDataError } from "../errors/invalid-data-error";
 
 export function validateBody(schema: ObjectSchema) {
  return (req: Request, res: Response, next: NextFunction) => {
@@ -11,7 +11,7 @@ export function validateBody(schema: ObjectSchema) {
    next();
   } else {
    res
-    .status(httpStatus.BAD_REQUEST)
+    .status(httpStatus.UNPROCESSABLE_ENTITY)
     .send(invalidDataError(error.details.map((d) => d.message)));
   }
  };
