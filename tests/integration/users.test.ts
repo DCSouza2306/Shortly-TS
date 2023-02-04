@@ -29,8 +29,7 @@ describe("POST /users", () => {
   const generateValidBody = () => ({
    name: faker.name.firstName(),
    email: faker.internet.email(),
-   password: faker.internet.password(6),
-   confirmPassword: faker.internet.password(6),
+   password: faker.internet.password(6)
   });
 
   it("Should response with status 409 when email is already registred", async () => {

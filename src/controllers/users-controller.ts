@@ -4,8 +4,7 @@ import userService from "../service/user-service";
 import { CreateUserParams } from "../service/user-service";
 
 export async function usersPost(req: Request, res: Response) {
- const { name, email, password } = req.body as CreateUserParams;
- const user = { name, email, password };
+ const user = req.body as CreateUserParams;
 
  try {
   await userService.postUser(user);
