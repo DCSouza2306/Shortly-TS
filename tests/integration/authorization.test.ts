@@ -12,13 +12,13 @@ const server = supertest(app);
 
 describe("POST /auth/signin", () => {
  it("Should response with status 422 when body is not give", async () => {
-  const response = await server.post("/auth/signin");
+  const response = await server.post("/auth/sign-in");
   expect(response.status).toBe(422);
  });
 
  it("Should response with status 422 when body is not valid", async () => {
   const invalidBody = { [faker.lorem.word()]: faker.lorem.word() };
-  const response = await server.post("/auth/signin").send(invalidBody);
+  const response = await server.post("/auth/sign-in").send(invalidBody);
 
   expect(response.status).toBe(422);
  });
@@ -37,7 +37,7 @@ describe("POST /auth/signin", () => {
 
   it("Should response with status 401 when there is no user for given email", async () => {
    const body = generateValidBodySignIn();
-   const response = await server.post("/auth/signin").send(body);
+   const response = await server.post("/auth/sign-in").send(body);
 
    expect(response.status).toBe(401);
   });
@@ -45,7 +45,7 @@ describe("POST /auth/signin", () => {
   it("Should response with status 401 when there is an user for email but passoword is not correct", async () => {
    const body = generateValidBodySignUp();
    await createUser(body);
-   const response = await server.post("/auth/signin").send({
+   const response = await server.post("/auth/sign-in").send({
     email: body.email,
     password: faker.lorem.word(6),
    });
@@ -60,7 +60,7 @@ describe("POST /auth/signin", () => {
      email: body.email,
      password: body.password,
     };
-    const response = await server.post("/auth/signin").send(user);
+    const response = await server.post("/auth/sign-in").send(user);
     expect(response.status).toBe(200);
    });
 
@@ -71,7 +71,7 @@ describe("POST /auth/signin", () => {
      email: body.email,
      password: body.password,
     };
-    const response = await server.post("/auth/signin").send(user);
+    const response = await server.post("/auth/sign-in").send(user);
     expect(response.body).toBeDefined();
    });
   });
