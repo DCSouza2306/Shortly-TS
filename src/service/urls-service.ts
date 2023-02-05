@@ -1,14 +1,14 @@
-import { CreateUrlParams } from "../protocols";
-import { nanoid } from "nanoid";
 import urlsRepository from "../repositories/urls-repository";
+import {v4 as uuid} from "uuid"
 
+/* const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwyz", 6); */
 
 async function postUrl(url: string, userId: number) {
- const shortUrl = nanoid(8);
+ const shortUrl = uuid().substring(0,8);
 
  await urlsRepository.create(url, shortUrl, userId);
 
- return shortUrl
+ return {shortUrl};
 }
 
 const urlsService = {

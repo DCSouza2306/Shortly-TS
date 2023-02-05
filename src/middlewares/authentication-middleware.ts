@@ -11,11 +11,11 @@ export async function authenticateToken(
 ) {
  const authHeader = req.header("Authorization");
  if (!authHeader)
-  return res.sendStatus(httpStatus.UNAUTHORIZED).send(unauthorizedError());
+  return res.status(httpStatus.UNAUTHORIZED).send(unauthorizedError());
 
  const token = authHeader.split(" ")[1];
  if (!token)
-  return res.sendStatus(httpStatus.UNAUTHORIZED).send(unauthorizedError());
+  return res.status(httpStatus.UNAUTHORIZED).send(unauthorizedError());
 
  try {
   const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
@@ -25,7 +25,7 @@ export async function authenticateToken(
   });
 
   if (!session)
-   return res.sendStatus(httpStatus.UNAUTHORIZED).send(unauthorizedError());
+   return res.status(httpStatus.UNAUTHORIZED).send(unauthorizedError());
 
   req.userId = userId;
   return next();
