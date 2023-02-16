@@ -1,4 +1,6 @@
+import { count } from "console";
 import prisma from "../data/database";
+import userRepository from "./users-repository";
 
 async function create(url: string, shortUrl: string, userId: number) {
  return await prisma.urls.create({
@@ -29,12 +31,38 @@ async function deleteUrl(urlId: number){
     })
 }
 
+async function findAll(userId: number) {
+    return await prisma.urls.findMany({
+        where:{
+            id_user: userId
+        },
+        select: {
+            id: true,
+            shortUrl: true,
+            url: true,
+            count: true
+        }
+    })
+}
+
+async function visitCount(userId: number){
+    return await prisma.urls.aggregate({
+        where: {
+            id_user: userId
+        },
+        _sum: {
+            count: true,
+        }
+    })
+}
+
 const urlsRepository = {
  create,
  findById,
  findByShorten,
- deleteUrl
-
+ deleteUrl,
+ findAll,
+ visitCount
 };
 
 export default urlsRepository;

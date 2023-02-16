@@ -3,6 +3,7 @@ import {v4 as uuid} from "uuid"
 import { notFoundError } from "../errors/not-found-error";
 import { urls } from "@prisma/client";
 import { unauthorizedError } from "../errors/unauthorized-error";
+import userRepository from "../repositories/users-repository";
 
 /* const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwyz", 6); */
 
@@ -48,11 +49,29 @@ async function deleteUrl(urlId: number, userId: number){
     await urlsRepository.deleteUrl(urlId)
 }
 
+async function findAll(userId: number){
+    const user = await userRepository.findById(userId);
+    if(!user){
+        throw notFoundError()
+    }
+
+    const urls = await urlsRepository.findAll(userId);
+    const {_sum: sum} = await urlsRepository.visitCount(userId)
+    return {
+        id: user.id,
+        name: user.name,
+        visitCount: sum.count,
+        shortenedUrls: urls
+        
+    }
+}
+
 const urlsService = {
  postUrl,
  getUrl,
  getShortUrl,
- deleteUrl
+ deleteUrl,
+ findAll
 };
 
 export default urlsService;

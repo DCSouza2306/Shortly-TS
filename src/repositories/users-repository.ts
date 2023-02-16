@@ -15,9 +15,18 @@ async function create(user: CreateUserParams) {
  });
 }
 
+async function findById(userId: number){
+    return await prisma.users.findFirst({
+        where: {
+            id: userId
+        }
+    })
+}
+
 const userRepository = {
  findByEmail,
  create,
+ findById
 };
 
 export default userRepository;
