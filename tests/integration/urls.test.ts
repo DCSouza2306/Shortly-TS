@@ -70,7 +70,6 @@ describe("POST /urls/shorten", () => {
      .post("/urls/shorten")
      .set("Authorization", `Bearer ${token}`)
      .send(body);
-    console.log(response.body);
     expect(response.status).toBe(201);
     expect(response.body).toBeDefined();
    });
