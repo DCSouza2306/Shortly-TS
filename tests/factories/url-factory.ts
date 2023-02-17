@@ -3,7 +3,13 @@ import faker from "@faker-js/faker";
 import { Prisma } from "@prisma/client";
 
 export async function createUrl(params: Prisma.urlsUncheckedCreateInput) {
+    const urlGiven = faker.internet.url() || params.url;
+    const shortenGiven = faker.lorem.word(8) || params.shortUrl
  return await prisma.urls.create({
-  data: params,
+  data: {
+    shortUrl: shortenGiven,
+    url: urlGiven,
+    id_user: params.id_user
+  }
  });
 }

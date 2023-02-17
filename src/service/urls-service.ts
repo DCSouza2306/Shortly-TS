@@ -43,7 +43,7 @@ async function getShortUrl(shortUrl: string){
 async function deleteUrl(urlId: number, userId: number){
     const url = await urlsRepository.findById(urlId)
     if(!url){
-        throw notFoundError
+        throw notFoundError()
     }
 
     if(url.id_user != userId){

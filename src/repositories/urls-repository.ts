@@ -1,6 +1,5 @@
-import { count } from "console";
 import prisma from "../data/database";
-import userRepository from "./users-repository";
+
 
 async function create(url: string, shortUrl: string, userId: number) {
  return await prisma.urls.create({
@@ -9,7 +8,7 @@ async function create(url: string, shortUrl: string, userId: number) {
 }
 
 async function findById(urlId: number){
-    return await prisma.urls.findFirst({
+    return prisma.urls.findFirst({
         where: {id: urlId}
     })
 }

@@ -3,7 +3,7 @@ import { Response, Request } from "express";
 import { CreateUrlParams } from "../protocols";
 import httpStatus from "http-status";
 import urlsService from "../service/urls-service";
-
+ 
 export async function postUrl(req: AutenticateRequest, res: Response) {
  const { url } = req.body as CreateUrlParams;
  const userId = req.userId;
@@ -30,8 +30,8 @@ export async function openUrl(req: Request, res: Response) {
  const { shortUrl } = req.params;
 
  try {
-  const { url } = await urlsService.getShortUrl(shortUrl);
-  res.redirect(`${url}`);
+  const url = await urlsService.getShortUrl(shortUrl);
+  res.redirect(`${url.url}`);
  } catch (e) {
   res.sendStatus(httpStatus.NOT_FOUND);
  }
