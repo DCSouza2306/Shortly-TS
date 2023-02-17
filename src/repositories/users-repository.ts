@@ -2,11 +2,12 @@ import { CreateUserParams } from "../service/user-service";
 import prisma from "../data/database";
 
 async function findByEmail(email: string) {
- return prisma.users.findFirst({
+ const users = await prisma.users.findFirst({
   where: {
    email
   },
  });
+ return users;
 }
 
 async function create(user: CreateUserParams) {
@@ -15,18 +16,40 @@ async function create(user: CreateUserParams) {
  });
 }
 
-async function findById(userId: number){
-    return await prisma.users.findFirst({
-        where: {
-            id: userId
-        }
-    })
+async function findById(userId: number) {
+ return await prisma.users.findFirst({
+  where: {
+   id: userId,
+  },
+ });
 }
+
+async function findAll() {
+ return await prisma.users.findMany({
+    select:{
+        id: true,
+        name: true,
+        _count:{
+            select: {
+                urls: true,
+            }
+        },
+        urls:{
+            select:{
+                count: true
+            }
+        }
+    }
+ });
+}
+
+
 
 const userRepository = {
  findByEmail,
  create,
- findById
+ findById,
+ findAll,
 };
 
 export default userRepository;

@@ -14,16 +14,36 @@ async function postUser(user: CreateUserParams) {
 }
 
 async function validateUniqueEmail(email: string) {
+   
  const emailAlreadyRegistred = await userRepository.findByEmail(email);
  if (emailAlreadyRegistred) {
   throw duplicatedEmail();
  }
 }
 
+async function findAll() {
+ const users = await userRepository.findAll();
+ const response = users.map((e) => {
+  const initialValue = 0;
+  const sum = e.urls.reduce(
+   (acumulator, { count }) => acumulator + count,
+   initialValue
+  );
+  return {
+   id: e.id,
+   name: e.name,
+   linksCount: e._count.urls,
+   visitCount: sum,
+  };
+ });
+ return response
+}
+
 export type CreateUserParams = Pick<users, "name" | "email" | "password">;
 
 const userService = {
  postUser,
+ findAll,
 };
 
 export default userService;

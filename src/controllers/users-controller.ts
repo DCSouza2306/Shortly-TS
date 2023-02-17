@@ -8,7 +8,6 @@ import { CreateUserParams } from "../service/user-service";
 
 export async function usersPost(req: Request, res: Response) {
  const user = req.body as CreateUserParams;
-
  try {
   await userService.postUser(user);
 
@@ -24,6 +23,15 @@ export async function getUrls(req: AutenticateRequest, res: Response){
       const urls = await urlsService.findAll(userId);
       res.status(httpStatus.OK).send(urls)
    } catch(e){
+      res.sendStatus(httpStatus.NOT_FOUND)
+   }
+}
+
+export async function getRanking(req: Request, res: Response){
+   try{
+      const ranking = await userService.findAll()
+      res.status(httpStatus.OK).send(ranking)
+   } catch(e) {
       res.sendStatus(httpStatus.NOT_FOUND)
    }
 }

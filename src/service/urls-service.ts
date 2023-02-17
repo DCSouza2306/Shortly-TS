@@ -33,7 +33,11 @@ async function getShortUrl(shortUrl: string){
         throw notFoundError()
     };
 
-    return response
+    await urlsRepository.updateUrl(response.id, response.count)
+
+    return {
+        url: response.url
+    }
 }
 
 async function deleteUrl(urlId: number, userId: number){

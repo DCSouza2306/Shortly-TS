@@ -18,9 +18,6 @@ async function findByShorten(shortUrl: string){
     return await prisma.urls.findFirst({
         where: {
             shortUrl
-        },
-        select: {
-            url: true
         }
     })
 }
@@ -56,13 +53,25 @@ async function visitCount(userId: number){
     })
 }
 
+async function updateUrl(id: number, visitCount: number){
+    return prisma.urls.update({
+        where:{
+            id
+        },
+        data: {
+            count: visitCount + 1
+        }
+    })
+}
+
 const urlsRepository = {
  create,
  findById,
  findByShorten,
  deleteUrl,
  findAll,
- visitCount
+ visitCount,
+ updateUrl
 };
 
 export default urlsRepository;
