@@ -1,4 +1,4 @@
-import { cleanDb } from "../helpers";
+import { cleanDb, generateValidUrl, generateValidUser } from "../helpers";
 import supertest from "supertest";
 import app from "../../src/app";
 import faker from "@faker-js/faker";
@@ -159,16 +159,7 @@ describe("GET /urls/open/:shortUrl", () => {
 });
 
 describe("DELETE /urls/:id", () => {
- const generateValidUser = () => ({
-  name: faker.name.firstName(),
-  email: faker.internet.email(),
-  password: faker.internet.password(6),
- });
- const generateValidUrl = (userId: number) => ({
-  url: faker.internet.url(),
-  shortUrl: faker.lorem.word(8),
-  id_user: userId,
- });
+ 
  it("Should response with status 401 if token is not given", async () => {
   const response = await server.post("/urls/shorten");
 

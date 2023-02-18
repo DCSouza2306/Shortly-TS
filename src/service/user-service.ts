@@ -36,7 +36,11 @@ async function findAll() {
    visitCount: sum,
   };
  });
- return response
+ return response.sort((a,b) => {
+    if(a.visitCount > b.visitCount) return -1;
+    if(a.visitCount < b.visitCount) return 1;
+    return 0;
+ })
 }
 
 export type CreateUserParams = Pick<users, "name" | "email" | "password">;

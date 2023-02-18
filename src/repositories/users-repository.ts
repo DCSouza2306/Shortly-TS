@@ -36,10 +36,11 @@ async function findAll() {
         },
         urls:{
             select:{
-                count: true
+                count: true,
             }
         }
-    }
+    },
+    take: 10
  });
 }
 
